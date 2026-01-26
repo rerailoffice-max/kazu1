@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAZU I - 72時間 | WAIFF KYOTO 2026 出品作品</title>
+    <meta name="description" content="2022年知床観光船沈没事故を題材にしたAIドキュメンタリー映画。WAIFF KYOTO 2026（世界AI国際映画祭）出品作品。">
+    <meta property="og:title" content="KAZU I - 72時間 | AI Documentary Film">
+    <meta property="og:description" content="26名の命が失われた知床観光船事故。72時間の記録をAIで再構築する。">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #0a0a0a;
+            --secondary-dark: #1a1a2e;
+            --accent-blue: #16213e;
+            --ocean-blue: #0f3460;
+            --text-white: #e8e8e8;
+            --text-gray: #a0a0a0;
+            --accent-red: #8b0000;
+            --gold: #c9a227;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-white);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(180deg,
+                rgba(10, 10, 10, 0.9) 0%,
+                rgba(15, 52, 96, 0.7) 50%,
+                rgba(10, 10, 10, 0.95) 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="wave" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%230f3460;stop-opacity:0.3"/><stop offset="100%" style="stop-color:%231a1a2e;stop-opacity:0.5"/></linearGradient></defs><rect fill="url(%23wave)" width="100" height="100"/></svg>');
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 50% 80%, rgba(15, 52, 96, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 20%, rgba(26, 26, 46, 0.3) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .date-label {
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            color: var(--text-gray);
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .main-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 60px rgba(15, 52, 96, 0.8);
+        }
+
+        .main-title span {
+            display: block;
+            font-size: 0.4em;
+            letter-spacing: 0.2em;
+            font-weight: 400;
+            margin-top: 0.5rem;
+            color: var(--text-gray);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin: 2rem 0;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+        }
+
+        .tagline {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.5rem;
+            margin: 3rem 0;
+            padding: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-weight: 400;
+            line-height: 2;
+        }
+
+        .festival-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold) 0%, #d4af37 100%);
+            color: var(--primary-dark);
+            padding: 0.8rem 2rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            margin-top: 2rem;
+            border-radius: 2px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator::after {
+            content: '▼';
+            color: var(--text-gray);
+            font-size: 1.5rem;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            letter-spacing: 0.1em;
+        }
+
+        .section-title-en {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            text-align: center;
+            letter-spacing: 0.3em;
+            margin-bottom: 3rem;
+        }
+
+        /* Festival Section */
+        .festival-section {
+            background: linear-gradient(180deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+        }
+
+        .festival-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .festival-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 2rem;
+            border-radius: 4px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .festival-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+        }
+
+        .festival-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+
+        .festival-card p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        .festival-card ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .festival-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
+        }
+
+        .festival-card li:last-child {
+            border-bottom: none;
+        }
+
+        /* Story Section */
+        .story-section {
+            background: var(--primary-dark);
+        }
+
+        .story-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .story-intro {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            line-height: 2.2;
+            color: var(--text-white);
+        }
+
+        .story-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 2rem;
+            background: rgba(139, 0, 0, 0.1);
+            border-left: 3px solid var(--accent-red);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-white);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin-top: 0.5rem;
+        }
+
+        .story-timeline {
+            margin: 4rem 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .timeline-time {
+            min-width: 100px;
+            font-weight: 700;
+            color: var(--ocean-blue);
+            font-size: 1.1rem;
+        }
+
+        .timeline-content h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        /* Film Section */
+        .film-section {
+            background: linear-gradient(180deg, var(--secondary-dark) 0%, var(--primary-dark) 100%);
+        }
+
+        .film-concept {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .concept-block {
+            padding: 2rem;
+            background: rgba(15, 52, 96, 0.2);
+            border-radius: 4px;
+        }
+
+        .concept-block h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .concept-block p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .dual-perspective {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .perspective-card {
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+
+        .perspective-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .perspective-card .label {
+            font-size: 0.8rem;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+
+        .perspective-card p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* AI Technology Section */
+        .tech-section {
+            background: var(--primary-dark);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .tech-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--ocean-blue);
+        }
+
+        .tech-card .tool-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-card .tool-role {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+        }
+
+        .tech-card .tool-version {
+            font-size: 0.75rem;
+            color: var(--gold);
+            margin-top: 0.5rem;
+        }
+
+        /* Scenes Preview */
+        .scenes-section {
+            background: linear-gradient(180deg, var(--primary-dark) 0%, var(--accent-blue) 50%, var(--primary-dark) 100%);
+        }
+
+        .scenes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .scene-card {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scene-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--ocean-blue);
+        }
+
+        .scene-time {
+            font-size: 0.8rem;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+        }
+
+        .scene-title {
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
+        }
+
+        .scene-desc {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        /* Creator Section */
+        .creator-section {
+            background: var(--secondary-dark);
+            text-align: center;
+        }
+
+        .creator-profile {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 3rem;
+        }
+
+        .creator-title {
+            font-size: 0.9rem;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+
+        .creator-bio {
+            font-size: 1rem;
+            line-height: 2;
+            color: var(--text-gray);
+        }
+
+        .creator-message {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.3rem;
+            margin-top: 3rem;
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-style: italic;
+            line-height: 2;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-subtitle {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            margin: 2rem 0;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .story-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .dual-perspective {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+            }
+
+            .timeline-time {
+                margin-bottom: 0.5rem;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+        }
+
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="date-label">2022.04.23 — 2022.04.26</p>
+            <h1 class="main-title">
+                KAZU I
+                <span>— 72時間 —</span>
+            </h1>
+            <p class="subtitle">AI DOCUMENTARY FILM</p>
+            <div class="tagline">
+                26名の命が奪われた、<br>
+                あの72時間を忘れない。<br>
+                二度と繰り返さないために。
+            </div>
+            <div class="festival-badge">
+                WAIFF KYOTO 2026 出品作品
+            </div>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Festival Section -->
+    <section class="festival-section fade-in">
+        <h2 class="section-title">世界AI国際映画祭</h2>
+        <p class="section-title-en">WORLD AI FILM FESTIVAL KYOTO 2026</p>
+
+        <div class="festival-info">
+            <div class="festival-card">
+                <h3>🎬 WAIFFとは</h3>
+                <p>世界AI国際映画祭（WAIFF）は、AI技術を活用した映像作品を表彰する国際的な映画祭です。2026年3月、京都で開催されます。</p>
+                <ul>
+                    <li>📅 開催日：2026年3月12日-13日</li>
+                    <li>📍 会場：京都</li>
+                    <li>🌍 参加国：世界各国</li>
+                    <li>🎯 締切：2026年2月15日</li>
+                </ul>
+            </div>
+
+            <div class="festival-card">
+                <h3>🏆 受賞のメリット</h3>
+                <ul>
+                    <li>🥇 グランプリ：賞金 + 国際的認知</li>
+                    <li>🎖️ 各部門賞：専門分野での評価</li>
+                    <li>🌐 国際映画祭ネットワークへの参加</li>
+                    <li>📺 メディア露出・取材機会</li>
+                    <li>🤝 AI映像クリエイターとの交流</li>
+                </ul>
+            </div>
+
+            <div class="festival-card">
+                <h3>📋 応募要件</h3>
+                <ul>
+                    <li>⏱️ 尺：5〜10分</li>
+                    <li>📐 解像度：4K推奨（Full HD以上）</li>
+                    <li>🎞️ フォーマット：MP4 / MOV</li>
+                    <li>🔤 字幕：英語字幕必須</li>
+                    <li>🤖 AIツール：3種類以上使用</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section fade-in">
+        <h2 class="section-title">事故の記録</h2>
+        <p class="section-title-en">THE INCIDENT</p>
+
+        <div class="story-content">
+            <p class="story-intro">
+                2022年4月23日、北海道・知床半島沖で<br>
+                観光船「KAZU I」が沈没。<br>
+                乗客乗員26名全員が犠牲となった。
+            </p>
+
+            <div class="story-stats">
+                <div class="stat-item">
+                    <div class="stat-number">26</div>
+                    <div class="stat-label">名の乗客乗員</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">72</div>
+                    <div class="stat-label">時間の捜索</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3-4°C</div>
+                    <div class="stat-label">海水温</div>
+                </div>
+            </div>
+
+            <div class="story-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-time">10:00</div>
+                    <div class="timeline-content">
+                        <h4>出航</h4>
+                        <p>ウトロ港を出発。天候は曇り、波は穏やか。乗客は知床の絶景を楽しみにしていた。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">13:13</div>
+                    <div class="timeline-content">
+                        <h4>最初の通報</h4>
+                        <p>「船首が浸水している」「沈んでいる」—船長から118番への緊急通報。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">14:17</div>
+                    <div class="timeline-content">
+                        <h4>通信途絶</h4>
+                        <p>すべての通信が途絶える。海上保安庁の大規模捜索が始まる。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">72時間後</div>
+                    <div class="timeline-content">
+                        <h4>捜索終了</h4>
+                        <p>20名の死亡が確認。6名は今も行方不明のまま。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Film Section -->
+    <section class="film-section fade-in">
+        <h2 class="section-title">作品について</h2>
+        <p class="section-title-en">ABOUT THE FILM</p>
+
+        <div class="film-concept">
+            <div class="concept-block">
+                <h3>📖 コンセプト</h3>
+                <p>本作は、2022年の知床観光船沈没事故を題材にしたAIドキュメンタリー映画です。</p>
+                <p>ナレーションを一切使用せず、テロップと環境音のみで構成。観客自身が「目撃者」として追体験できる構造を目指しています。</p>
+                <p>「忘れない、繰り返さない」—この作品が、安全への意識を高めるきっかけになることを願っています。</p>
+            </div>
+
+            <div class="concept-block">
+                <h3>🎥 映像スタイル</h3>
+                <p>全編を通じて、シネマティックな映画撮影スタイルを採用。</p>
+                <p>Arri Alexa Mini LFカメラ、35mmレンズを想定した画作りで、ドキュメンタリーでありながら劇映画のような没入感を実現します。</p>
+                <p>4K解像度、24fps、16:9アスペクト比で制作。</p>
+            </div>
+        </div>
+
+        <h3 style="text-align: center; margin: 4rem 0 2rem; font-size: 1.3rem;">デュアル視点構造</h3>
+
+        <div class="dual-perspective">
+            <div class="perspective-card">
+                <div class="label">PERSPECTIVE A</div>
+                <h4>乗客カメラ</h4>
+                <p>乗客が撮影していたかのような、手持ちカメラ視点。船内からの主観的な体験を再現。揺れ、恐怖、そして最後の瞬間まで。</p>
+            </div>
+            <div class="perspective-card">
+                <div class="label">PERSPECTIVE B</div>
+                <h4>ドキュメンタリー</h4>
+                <p>俯瞰・ドローン視点による客観的な記録。捜索活動、陸上の動き、そして事態の全体像を描く。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scenes Preview -->
+    <section class="scenes-section fade-in">
+        <h2 class="section-title">シーン構成</h2>
+        <p class="section-title-en">SCENE BREAKDOWN</p>
+
+        <div class="scenes-grid">
+            <div class="scene-card">
+                <div class="scene-time">0:00 - 1:12</div>
+                <div class="scene-title">第1章：出発</div>
+                <div class="scene-desc">ウトロ港、KAZU I、乗船する乗客たち。期待に満ちた朝。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-time">1:12 - 2:58</div>
+                <div class="scene-title">第2章：航海</div>
+                <div class="scene-desc">知床の絶景、オシンコシンの滝、岸辺のヒグマ。穏やかな時間。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-time">2:58 - 4:23</div>
+                <div class="scene-title">第3章：異変</div>
+                <div class="scene-desc">高くなる波、揺れる船内、募る不安。他社からの警告。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-time">4:23 - 6:05</div>
+                <div class="scene-title">第4章：沈没</div>
+                <div class="scene-desc">浸水、傾斜、最後の通報、最後の電話。そして—</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-time">6:05 - 8:17</div>
+                <div class="scene-title">第5章：捜索</div>
+                <div class="scene-desc">海上保安庁の懸命な捜索。巡視船、ヘリコプター、夜間作業。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-time">8:17 - 10:15</div>
+                <div class="scene-title">第6章：記憶</div>
+                <div class="scene-desc">発見、収容、そして祈り。二度と繰り返さないために。</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Technology Section -->
+    <section class="tech-section fade-in">
+        <h2 class="section-title">使用AI技術</h2>
+        <p class="section-title-en">AI TECHNOLOGY</p>
+
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tool-name">Midjourney</div>
+                <div class="tool-role">画像生成</div>
+                <div class="tool-version">V7</div>
+            </div>
+            <div class="tech-card">
+                <div class="tool-name">Kling AI</div>
+                <div class="tool-role">動画生成</div>
+                <div class="tool-version">2.6</div>
+            </div>
+            <div class="tech-card">
+                <div class="tool-name">Runway</div>
+                <div class="tool-role">動画生成</div>
+                <div class="tool-version">Gen-4.5</div>
+            </div>
+            <div class="tech-card">
+                <div class="tool-name">Pika Labs</div>
+                <div class="tool-role">動画生成</div>
+                <div class="tool-version">Latest</div>
+            </div>
+            <div class="tech-card">
+                <div class="tool-name">ElevenLabs</div>
+                <div class="tool-role">音声生成</div>
+                <div class="tool-version">+ Lipsync</div>
+            </div>
+            <div class="tech-card">
+                <div class="tool-name">Topaz AI</div>
+                <div class="tool-role">4Kアップスケール</div>
+                <div class="tool-version">Video AI</div>
+            </div>
+        </div>
+
+        <p style="text-align: center; margin-top: 3rem; color: var(--text-gray);">
+            5種類以上のAIツールを連携し、<br>
+            画像生成から動画化、音声合成、リップシンクまで<br>
+            最新のAI技術を駆使して制作しています。
+        </p>
+    </section>
+
+    <!-- Creator Section -->
+    <section class="creator-section fade-in">
+        <h2 class="section-title">制作者より</h2>
+        <p class="section-title-en">FROM THE CREATOR</p>
+
+        <div class="creator-profile">
+            <div class="creator-title">監督・脚本</div>
+            <p class="creator-bio">
+                元海上保安庁広報官。KAZU I事故当時、捜索活動の広報対応を担当。<br>
+                事故から3年、あの日のことを忘れないために、この作品を制作することを決意。<br>
+                AIという新しい表現手段を通じて、事故の記憶を後世に伝えます。
+            </p>
+            <div class="creator-message">
+                「この作品は、犠牲になられた26名の方々への追悼であり、<br>
+                同時に、二度とこのような悲劇を繰り返さないための<br>
+                警鐘でもあります。」
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <h2 class="footer-title">KAZU I — 72時間</h2>
+        <p class="footer-subtitle">AI DOCUMENTARY FILM | WAIFF KYOTO 2026</p>
+
+        <div class="footer-links">
+            <a href="https://waiff.org" target="_blank">WAIFF公式サイト</a>
+            <a href="#top">トップに戻る</a>
+        </div>
+
+        <p class="copyright">
+            © 2026 KAZU I - 72 Hours Project. All Rights Reserved.<br>
+            This film is dedicated to the 26 victims of the Shiretoko tour boat accident.
+        </p>
+    </footer>
+
+    <script>
+        // Fade-in animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
