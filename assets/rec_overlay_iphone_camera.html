@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Camera Recording Overlay - 16:9</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: transparent;
+            overflow: hidden;
+        }
+
+        .overlay-container {
+            width: 1920px;
+            height: 1080px;
+            position: relative;
+            background: transparent;
+        }
+
+        /* 3x3 グリッド線 */
+        .grid-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .grid-line-v {
+            position: absolute;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .grid-line-v:nth-child(1) { left: 33.33%; }
+        .grid-line-v:nth-child(2) { left: 66.66%; }
+
+        .grid-line-h {
+            position: absolute;
+            left: 0;
+            height: 1px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .grid-line-h:nth-child(3) { top: 33.33%; }
+        .grid-line-h:nth-child(4) { top: 66.66%; }
+
+        /* 上部中央の緑の録画インジケーター */
+        .rec-indicator-top {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: #30D158;
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(48, 209, 88, 0.8);
+            animation: pulse-green 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-green {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 0 0 6px rgba(48, 209, 88, 0.8);
+            }
+            50% {
+                opacity: 0.7;
+                box-shadow: 0 0 12px rgba(48, 209, 88, 1);
+            }
+        }
+
+        /* 右上の赤い録画タイマー */
+        .rec-timer {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            background: #FF3B30;
+            padding: 8px 16px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Mono', 'Menlo', monospace;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .timer-text {
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* プレビュー用背景（書き出し時は削除） */
+        .preview-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            z-index: -1;
+        }
+
+        /* 書き出しモード用 */
+        body.export-mode .preview-bg {
+            display: none;
+        }
+
+        body.export-mode {
+            background: transparent !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- プレビュー用背景（透過書き出し時は非表示） -->
+    <div class="preview-bg"></div>
+
+    <div class="overlay-container">
+        <!-- 3x3 グリッド線 -->
+        <div class="grid-lines">
+            <div class="grid-line-v"></div>
+            <div class="grid-line-v"></div>
+            <div class="grid-line-h"></div>
+            <div class="grid-line-h"></div>
+        </div>
+
+        <!-- 上部中央の緑インジケーター -->
+        <div class="rec-indicator-top"></div>
+
+        <!-- 右上の赤い録画タイマー -->
+        <div class="rec-timer">
+            <span class="timer-text" id="timer">00:00:01</span>
+        </div>
+    </div>
+
+    <script>
+        // タイマー機能
+        let totalSeconds = 1; // 00:00:01からスタート
+        const timerElement = document.getElementById('timer');
+
+        function updateTimer() {
+            const hrs = Math.floor(totalSeconds / 3600);
+            const mins = Math.floor((totalSeconds % 3600) / 60);
+            const secs = totalSeconds % 60;
+
+            timerElement.textContent =
+                String(hrs).padStart(2, '0') + ':' +
+                String(mins).padStart(2, '0') + ':' +
+                String(secs).padStart(2, '0');
+
+            totalSeconds++;
+        }
+
+        // 1秒ごとに更新
+        setInterval(updateTimer, 1000);
+
+        // 書き出しモード切替（コンソールから実行）
+        // document.body.classList.add('export-mode');
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600&amp;display=swap');
+
+      .rec-text {
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        fill: #FF3B30;
+        letter-spacing: 1px;
+      }
+
+      .timer-text {
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Menlo', 'Inter', monospace;
+        font-size: 18px;
+        font-weight: 500;
+        fill: white;
+        letter-spacing: 0.5px;
+      }
+
+      .rec-dot {
+        fill: #FF3B30;
+      }
+    </style>
+
+    <!-- ドロップシャドウ -->
+    <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="rgba(0,0,0,0.5)"/>
+    </filter>
+
+    <filter id="dotGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 背景は透明 -->
+
+  <!-- REC インジケーター -->
+  <g transform="translate(40, 47)">
+    <!-- 点滅するRECドット -->
+    <circle cx="7" cy="0" r="7" class="rec-dot" filter="url(#dotGlow)">
+      <animate
+        attributeName="opacity"
+        values="1;0.2;1"
+        dur="1s"
+        repeatCount="indefinite"
+        calcMode="spline"
+        keySplines="0.4 0 0.6 1; 0.4 0 0.6 1"
+      />
+    </circle>
+
+    <!-- REC テキスト -->
+    <text x="24" y="5" class="rec-text" filter="url(#textShadow)">REC</text>
+  </g>
+
+  <!-- タイマー -->
+  <text x="110" y="52" class="timer-text" filter="url(#textShadow)">00:00:00</text>
+
+</svg>

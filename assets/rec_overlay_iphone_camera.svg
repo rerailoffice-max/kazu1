@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <style>
+      .timer-text {
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Mono', 'Menlo', monospace;
+        font-size: 24px;
+        font-weight: 600;
+        fill: white;
+        letter-spacing: 1px;
+      }
+    </style>
+
+    <!-- 緑インジケーターのグロー -->
+    <filter id="greenGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- タイマー背景のシャドウ -->
+    <filter id="timerShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.3)"/>
+    </filter>
+  </defs>
+
+  <!-- 背景は透明 -->
+
+  <!-- 3x3 グリッド線 -->
+  <g stroke="rgba(255,255,255,0.3)" stroke-width="1">
+    <!-- 垂直線 -->
+    <line x1="640" y1="0" x2="640" y2="1080"/>
+    <line x1="1280" y1="0" x2="1280" y2="1080"/>
+    <!-- 水平線 -->
+    <line x1="0" y1="360" x2="1920" y2="360"/>
+    <line x1="0" y1="720" x2="1920" y2="720"/>
+  </g>
+
+  <!-- 上部中央の緑インジケーター -->
+  <circle cx="960" cy="26" r="6" fill="#30D158" filter="url(#greenGlow)">
+    <animate
+      attributeName="opacity"
+      values="1;0.7;1"
+      dur="2s"
+      repeatCount="indefinite"
+      calcMode="spline"
+      keySplines="0.4 0 0.6 1; 0.4 0 0.6 1"
+    />
+  </circle>
+
+  <!-- 右上の赤い録画タイマー -->
+  <g transform="translate(1780, 40)" filter="url(#timerShadow)">
+    <!-- 赤い背景 (角丸四角形) -->
+    <rect x="0" y="0" width="120" height="44" rx="6" ry="6" fill="#FF3B30"/>
+    <!-- タイマーテキスト -->
+    <text x="60" y="30" text-anchor="middle" class="timer-text">00:00:01</text>
+  </g>
+
+</svg>

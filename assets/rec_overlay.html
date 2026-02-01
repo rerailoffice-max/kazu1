@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Recording Overlay - 16:9</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: transparent;
+            overflow: hidden;
+        }
+
+        .overlay-container {
+            width: 1920px;
+            height: 1080px;
+            position: relative;
+            background: transparent;
+        }
+
+        /* iPhone風 録画インジケーター - 左上 */
+        .rec-indicator {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+        }
+
+        .rec-dot {
+            width: 14px;
+            height: 14px;
+            background: #FF3B30;
+            border-radius: 50%;
+            animation: blink 1s ease-in-out infinite;
+            box-shadow: 0 0 8px rgba(255, 59, 48, 0.6);
+        }
+
+        .rec-text {
+            color: #FF3B30;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* タイマー表示 */
+        .timer {
+            position: absolute;
+            top: 40px;
+            left: 110px;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Menlo', monospace;
+            font-size: 18px;
+            font-weight: 500;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+            letter-spacing: 0.5px;
+        }
+
+        /* 点滅アニメーション */
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        /* プレビュー用背景（書き出し時は削除） */
+        .preview-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            z-index: -1;
+        }
+
+        /* 書き出しモード用 */
+        body.export-mode .preview-bg {
+            display: none;
+        }
+
+        body.export-mode {
+            background: transparent !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- プレビュー用背景（透過書き出し時は非表示） -->
+    <div class="preview-bg"></div>
+
+    <div class="overlay-container">
+        <!-- 録画インジケーター -->
+        <div class="rec-indicator">
+            <div class="rec-dot"></div>
+            <span class="rec-text">REC</span>
+        </div>
+
+        <!-- タイマー -->
+        <div class="timer">00:00:00</div>
+    </div>
+
+    <script>
+        // タイマー機能（オプション - 必要に応じて有効化）
+        let seconds = 0;
+        let timerEnabled = true; // false にするとタイマー非表示
+
+        const timerElement = document.querySelector('.timer');
+
+        if (!timerEnabled) {
+            timerElement.style.display = 'none';
+        }
+
+        function updateTimer() {
+            const hrs = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+
+            timerElement.textContent =
+                String(hrs).padStart(2, '0') + ':' +
+                String(mins).padStart(2, '0') + ':' +
+                String(secs).padStart(2, '0');
+
+            seconds++;
+        }
+
+        if (timerEnabled) {
+            setInterval(updateTimer, 1000);
+        }
+
+        // 書き出しモード切替（コンソールから実行）
+        // document.body.classList.add('export-mode');
+    </script>
+</body>
+</html>

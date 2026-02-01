@@ -230,7 +230,7 @@
   "duration": 5,
   "perspective": "A_passenger",
   "frame_a": {
-    "prompt": "Point of view from back seat of rental car driving in Hokkaido late April, looking forward through windshield, two adults visible from behind in front seats wearing casual spring jackets, coastal road ahead with mountains in distance, overcast grey sky, typical Japanese compact car interior, smartphone video quality with natural shake, heavy film grain, degraded resolution, slightly soft focus, muted colors, timestamp overlay 2022/04/23 09:15",
+    "prompt": "Point of view from back seat of rental car driving in Hokkaido late April, looking forward through windshield, two adults visible from behind in front seats wearing casual spring jackets, coastal road ahead with mountains in distance, overcast grey sky, typical Japanese compact car interior, smartphone video quality with natural shake, heavy film grain, degraded resolution, slightly soft focus, muted colors",
     "quality": "Sora2 style: iPhone footage aesthetic, grainy, soft, imperfect"
   },
   "frame_b": {
@@ -255,7 +255,7 @@
     "quality": "Sora2 style: grainy smartphone footage, degraded"
   },
   "frame_b": {
-    "prompt": "Smartphone video from backseat of car looking directly out left side window, Utoro Port clearly visible through car window with small Japanese fishing harbor and multiple fishing boats at wooden docks, low-rise coastal town buildings, window frame creating natural border, excited framing implying child voice, iPhone video quality, heavy visible grain, degraded resolution, muted desaturated colors, noise, timestamp 2022/04/23 09:25 style",
+    "prompt": "Smartphone video from backseat of car looking directly out left side window, Utoro Port clearly visible through car window with small Japanese fishing harbor and multiple fishing boats at wooden docks, low-rise coastal town buildings, window frame creating natural border, excited framing implying child voice, iPhone video quality, heavy visible grain, degraded resolution, muted desaturated colors, noise",
     "quality": "Sora2 style: raw iPhone footage, imperfect, artifacts"
   },
   "veo_prompt": "POV from backseat, camera pans from forward view to left side window, Utoro Port comes into view through car window, fishing boats visible, smartphone footage with natural pan movement and grain, 5 seconds"
@@ -512,7 +512,7 @@
   "perspective": "A_passenger",
   "prompt": {
     "frame_a": "Smartphone video from KAZU I deck as boat begins to move, Utoro Port harbor still close behind showing dock fishing boats small buildings of town, boat wake just beginning to form in water, heavy film grain, muted colors",
-    "frame_b": "Utoro Port now receding into distance as KAZU I heads out to sea, harbor buildings become smaller, boat white wake trail extends behind, other passengers on deck filming departure, excitement of journey beginning, last view of safety, heavy visible grain, degraded quality, noise"
+    "frame_b": "Utoro Port now receding into distance as KAZU I heads out to sea, harbor buildings become smaller, boat white wake trail extends behind, other passengers on deck filming departure, excitement of journey beginning, last view of safety, heavy visible grain, degraded quality, noise, documentary smartphone footage aesthetic"
   },
   "quality": "Sora2 style: grainy smartphone footage, soft focus"
 }
@@ -525,7 +525,7 @@
   "perspective": "B_documentary",
   "prompt": {
     "frame_a": "Aerial drone view of KAZU I just departing from Utoro Port, small white boat (19 tons 12 meters) leaving harbor with white wake trail beginning to form behind it, port facilities and town of Utoro visible, Sea of Okhotsk stretches ahead, overcast April sky, heavy film grain, soft focus",
-    "frame_b": "Higher aerial angle showing KAZU I now further from Utoro Port, boat has clear white wake trail extending behind, Shiretoko Peninsula coastline stretches ahead with dramatic cliffs, boat appears small against vast grey sea - tiny vessel heading into dangerous waters, cinematic drone footage style, timestamp overlay 午前10時00分 出航, heavy visible grain, degraded resolution, muted colors"
+    "frame_b": "Higher aerial angle showing KAZU I now further from Utoro Port, boat has clear white wake trail extending behind, Shiretoko Peninsula coastline stretches ahead with dramatic cliffs, boat appears small against vast grey sea - tiny vessel heading into dangerous waters, cinematic drone footage style, heavy visible grain, degraded resolution, muted colors"
   },
   "quality": "Sora2 style: grainy aerial footage, imperfect optics"
 }
@@ -692,7 +692,7 @@
   "perspective": "A_passenger",
   "prompt": {
     "frame_a": "Smartphone video from inside KAZU I looking through cabin window, waves outside starting to grow larger with whitecaps forming, sky through window noticeably darker than before, boat has begun to rock, heavy film grain, soft focus",
-    "frame_b": "Same window view but waves grown further, larger swells with prominent whitecaps roll past window, boat rocking more noticeably causing camera to shake, grey-green sea looks increasingly hostile, timestamp would read approximately 12:30 PM, heavy visible grain, degraded quality, noise"
+    "frame_b": "Same window view but waves grown further, larger swells with prominent whitecaps roll past window, boat rocking more noticeably causing camera to shake, grey-green sea looks increasingly hostile, heavy visible grain, degraded quality, noise"
   },
   "quality": "Sora2 style: shaky smartphone footage, grainy"
 }
@@ -813,7 +813,7 @@
     "prompt": "Aerial drone shot of KAZU I in violent storm, small white boat (19 tons 12 meters) tossed by waves approximately 3 meters, white foam and spray surround vessel, dark sky and dark sea merge at horizon, heavy film grain, soft focus"
   },
   "frame_b": {
-    "prompt": "Conditions worsened further, waves now exceeding 3-4 meters, tiny KAZU I thrown about by massive swells scale terrifying as small boat appears helpless against enormous grey-green waves, white foam covers much of sea surface, wind speed reached approximately 16 m/s, boat in mortal danger, timestamp overlay 波高3メートル以上, heavy visible grain, degraded resolution, muted colors, noise"
+    "prompt": "Conditions worsened further, waves now exceeding 3-4 meters, tiny KAZU I thrown about by massive swells scale terrifying as small boat appears helpless against enormous grey-green waves, white foam covers much of sea surface, wind speed reached approximately 16 m/s, boat in mortal danger, heavy visible grain, degraded resolution, muted colors, noise"
   },
   "quality": "Sora2 style: grainy aerial, ominous, imperfect"
 }
