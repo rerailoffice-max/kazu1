@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Camera Recording Overlay - 16:9 Landscape</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: transparent;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+        }
+
+        .overlay-container {
+            width: 1920px;
+            height: 1080px;
+            position: relative;
+            background: transparent;
+        }
+
+        /* ===== 上部中央：赤タイマー（横書き） ===== */
+        .rec-timer-top {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #FF3B30;
+            padding: 10px 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .timer-text {
+            color: white;
+            font-size: 32px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            font-variant-numeric: tabular-nums;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Mono', 'Menlo', monospace;
+        }
+
+        /* ===== 左端中央：緑インジケーター ===== */
+        .rec-indicator-left {
+            position: absolute;
+            top: 50%;
+            left: 40px;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: #30D158;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(48, 209, 88, 0.8);
+        }
+
+        /* ===== 右側エリア ===== */
+        .right-panel {
+            position: absolute;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        /* ズーム切替（縦並び） */
+        .zoom-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding-top: 30px;
+        }
+
+        .zoom-btn {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .zoom-btn.active {
+            background: rgba(80, 80, 80, 0.9);
+            color: #FFD60A;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        /* 右側縦列（サムネイル・録画ボタン・一時停止ボタン） */
+        .button-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 45px;
+        }
+
+        /* サムネイル（白い丸） */
+        .thumbnail {
+            width: 54px;
+            height: 54px;
+            background: white;
+            border-radius: 50%;
+            border: 2px solid rgba(100, 100, 100, 0.4);
+        }
+
+        /* 録画停止ボタン */
+        .record-btn {
+            width: 75px;
+            height: 75px;
+            background: rgba(75, 75, 75, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .record-stop {
+            width: 28px;
+            height: 28px;
+            background: #FF453A;
+            border-radius: 6px;
+        }
+
+        /* 一時停止ボタン */
+        .pause-btn {
+            width: 54px;
+            height: 54px;
+            background: rgba(90, 90, 90, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .pause-line {
+            width: 5px;
+            height: 20px;
+            background: white;
+            border-radius: 2px;
+        }
+
+        /* プレビュー用背景 */
+        .preview-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            z-index: -1;
+        }
+
+        body.export-mode .preview-bg {
+            display: none;
+        }
+
+        body.export-mode {
+            background: transparent !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-bg"></div>
+
+    <div class="overlay-container">
+
+        <!-- 上部中央：赤タイマー -->
+        <div class="rec-timer-top">
+            <span class="timer-text" id="timer">00:00:00</span>
+        </div>
+
+        <!-- 左端中央：緑インジケーター -->
+        <div class="rec-indicator-left"></div>
+
+        <!-- 右側パネル -->
+        <div class="right-panel">
+            <!-- ズーム切替（縦並び） -->
+            <div class="zoom-controls">
+                <span class="zoom-btn">8</span>
+                <span class="zoom-btn">4</span>
+                <span class="zoom-btn">2</span>
+                <span class="zoom-btn active">1×</span>
+                <span class="zoom-btn">.5</span>
+            </div>
+
+            <!-- ボタン縦列（サムネイル・録画・一時停止） -->
+            <div class="button-column">
+                <div class="thumbnail"></div>
+                <div class="record-btn">
+                    <div class="record-stop"></div>
+                </div>
+                <div class="pause-btn">
+                    <div class="pause-line"></div>
+                    <div class="pause-line"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let totalSeconds = 0;
+        const timerElement = document.getElementById('timer');
+
+        function updateTimer() {
+            const hrs = Math.floor(totalSeconds / 3600);
+            const mins = Math.floor((totalSeconds % 3600) / 60);
+            const secs = totalSeconds % 60;
+
+            timerElement.textContent =
+                String(hrs).padStart(2, '0') + ':' +
+                String(mins).padStart(2, '0') + ':' +
+                String(secs).padStart(2, '0');
+
+            totalSeconds++;
+        }
+
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
